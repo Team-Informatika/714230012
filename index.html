@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Personal Web</title>
+    <link rel="icon" type="image/x-icon" href="image/favicon/logo.ico">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gradient-to-r from-blue-500 to-indigo-700 text-white min-h-screen flex flex-col items-center justify-center">
@@ -47,23 +48,38 @@
     </div>
 
     <script>
+        fetch(window.location.href)
+        .then(response => {
+            if (!response.ok) {
+                window.location.href = "404.html";
+            }
+        });
+
         function showPopup(type) {
             const popup = document.getElementById("popup");
             const title = document.getElementById("popupTitle");
             const content = document.getElementById("popupContent");
 
-            if (type === "email") {
-                title.textContent = "Email Saya";
-                content.innerHTML = "📧 <a href='muflihafif234@gmail.com' class='text-blue-600 hover:underline'>muflihafif234@gmail.com</a>";
-            } else if (type === "telepon") {
-                title.textContent = "Nomor Telepon";
-                content.innerHTML = "📞 <a href='tel:+6282117676005' class='text-green-600 hover:underline'>+62 821 1767 6005</a>";
-            } else if (type === "rate") {
-                title.textContent = "Rate Personal";
-                content.innerHTML = "💰 Rate saya: <span class='text-yellow-500 font-semibold'>Rp. 250.000/jam</span>";
-            }
+            const popupData = {
+                email: {
+                    title: "Email Saya",
+                    content: "📧 <a href='mailto:muflihafif234@gmail.com' class='text-blue-600 hover:underline'>muflihafif234@gmail.com</a>"
+                },
+                telepon: {
+                    title: "Nomor Telepon",
+                    content: "📞 <a href='tel:+6282117676005' class='text-green-600 hover:underline'>+62 821 1767 6005</a>"
+                },
+                rate: {
+                    title: "Rate Personal",
+                    content: "💰 Rate saya: <span class='text-yellow-500 font-semibold'>Rp. 250.000/jam</span>"
+                }
+            };
 
-            popup.classList.remove("hidden");
+            if (popupData[type]) {
+                title.textContent = popupData[type].title;
+                content.innerHTML = popupData[type].content;
+                popup.classList.remove("hidden");
+            }
         }
 
         function hidePopup() {
